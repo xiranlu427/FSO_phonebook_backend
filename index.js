@@ -27,10 +27,6 @@ let persons = [
   }
 ];
 
-const cors = require('cors')
-
-app.use(cors())
-
 app.use(express.static('dist'))
 
 app.get('/api/persons', (request, response) => {
