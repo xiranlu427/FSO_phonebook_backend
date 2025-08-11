@@ -24,23 +24,22 @@ app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
 )
 
-
 app.get('/info', (request, response) => {
-  const time = new Date();
+  const time = new Date()
   Person.countDocuments({}).then(count => {
     let content = `
-      <p>Phonebook has info for ${persons.length} people</p>
+      <p>Phonebook has info for ${count} people</p>
       <p>${time.toString()}</p>
-      `
-      response.send(content);
+    `
+    response.send(content)
   })
-});
+})
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons)
   })
-});
+})
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
@@ -52,10 +51,10 @@ app.get('/api/persons/:id', (request, response, next) => {
       }
     })
     .catch(error => next(error))
-});
+})
 
 app.post('/api/persons', (request, response, next) => {
-  const { name, number } = request.body;
+  const { name, number } = request.body
   const person = new Person({
     name,
     number
@@ -102,7 +101,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint)
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+  console.log(`Server running on port ${PORT}`)
+})
